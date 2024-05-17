@@ -16,11 +16,13 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     const type = props.type || 'text';
 
     return (
-        <FormControl isInvalid={!!error}>
-            <FormLabel htmlFor={field.name}>{label}</FormLabel>
-            <Input {...field} id={field.name} placeholder={placeholder} type={type} />
-            {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
-        </FormControl>
+        <>
+            <FormControl isInvalid={!!error}>
+                <FormLabel htmlFor={field.name}>{label}</FormLabel>
+                <Input {...field} id={field.name} placeholder={placeholder} type={type} />
+                {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
+            </FormControl>
+        </>
     );
 };
 
