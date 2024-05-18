@@ -1,12 +1,11 @@
 "use client";
-import { Form, Formik } from "formik";
-import Wrapper from "../components/Wrapper";
-import InputField from "../components/InputField";
 import { Box, Button } from "@chakra-ui/react";
-import { useMutation } from "urql";
-import { toErrorsMap } from "../lib/utils/toErrorMap";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
+import InputField from "../components/InputField";
+import Wrapper from "../components/Wrapper";
 import { useLoginMutation } from "../lib/graphql/generated/graphql";
+import { toErrorsMap } from "../lib/utils/toErrorMap";
 
 interface LoginProps { };
 

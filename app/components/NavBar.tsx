@@ -1,7 +1,5 @@
-import { Box, Button, Flex, Link, LinkProps, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Link, LinkProps, Spinner } from "@chakra-ui/react";
 import React from "react";
-import { useQuery } from "urql";
-import { Spinner } from "@chakra-ui/react";
 import { useLogoutMutation, useMeQuery } from "../lib/graphql/generated/graphql";
 
 const NavBarLink: React.FC<LinkProps> = (props) => {
