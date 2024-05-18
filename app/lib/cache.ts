@@ -7,11 +7,11 @@ const updateMeQuery = (cache: Cache, result: any) => {
             data.me = result.login.user;
             return data;
         }
-        return null
+        return null;
     });
-}
+};
 
-const clearMeQuery = (cache: Cache) => updateMeQuery(cache, { login: { user: null } })
+const clearMeQuery = (cache: Cache) => updateMeQuery(cache, { login: { user: null } });
 
 
 

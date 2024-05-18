@@ -4,9 +4,9 @@ import Wrapper from "../components/Wrapper";
 import InputField from "../components/InputField";
 import { Box, Button } from "@chakra-ui/react";
 import { useMutation } from "urql";
-import { toErrorsMap } from "../utils/toErrorMap";
+import { toErrorsMap } from "../lib/utils/toErrorMap";
 import { useRouter } from "next/navigation";
-import { useCreateUserMutation } from "../graphql/generated/graphql";
+import { useCreateUserMutation } from "../lib/graphql/generated/graphql";
 
 
 interface CreateUserProps { };
@@ -21,9 +21,9 @@ const CreateUser: React.FC<CreateUserProps> = ({ }) => {
                 onSubmit={async (values, { setErrors }) => {
                     const res = await createUser(values as any);
                     if (res.data?.createUser.errors)
-                        setErrors(toErrorsMap(res.data.createUser.errors))
+                        setErrors(toErrorsMap(res.data.createUser.errors));
                     else if (res.data?.createUser.user)
-                        router.push('/');
+                        router.push("/");
                 }}
             >
                 {({ isSubmitting }) => (

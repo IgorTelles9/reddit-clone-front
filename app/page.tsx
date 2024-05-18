@@ -1,13 +1,13 @@
-// app/page.tsx
 "use client";
-import NavBar from "./components/NavBar";
+import { withUrql } from "./lib/urqlClient";
 
-export default function Page() {
+const Page = () => {
     return (
         <>
-            <NavBar />
             Hello World!
         </>
 
     );
-}
+};
+
+export default withUrql(Page);

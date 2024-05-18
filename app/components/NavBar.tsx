@@ -1,8 +1,21 @@
-import { Box, Button, Flex, Link, Text } from '@chakra-ui/react';
-import React from 'react';
-import { useQuery } from 'urql';
-import { Spinner } from '@chakra-ui/react'
-import { useLogoutMutation, useMeQuery } from '../graphql/generated/graphql';
+import { Box, Button, Flex, Link, LinkProps, Text } from "@chakra-ui/react";
+import React from "react";
+import { useQuery } from "urql";
+import { Spinner } from "@chakra-ui/react";
+import { useLogoutMutation, useMeQuery } from "../lib/graphql/generated/graphql";
+
+const NavBarLink: React.FC<LinkProps> = (props) => {
+    return (
+        <Link
+            mr={4}
+            color="white"
+            textDecoration="none"
+            _hover={{ textDecoration: "none" }}
+            {...props}
+        />
+    );
+
+};
 
 const NavBar: React.FC = () => {
     const [{ data, fetching }] = useMeQuery();
@@ -13,28 +26,33 @@ const NavBar: React.FC = () => {
     else if (!data?.me)
         items = (
             <>
-                <Link mr={4} color="white" href="/login">
+                <NavBarLink href="/login">
                     sign in
-                </Link>
-                <Link mr={4} color="white" href="/create-user">
+                </NavBarLink>
+                <NavBarLink href="/create-user">
                     sign up
-                </Link>
+                </NavBarLink>
             </>
-        )
+        );
     else
         items = (
             <Flex mr={4}>
                 <Box mr={3}>{data.me.username}</Box>
-                <Button onClick={() => logout({})} variant="link" > logout </Button>
+                <Button
+                    onClick={() => logout({})}
+                    variant="link"
+                    textDecoration="none"
+                    _hover={{ textDecoration: "none" }}
+                > logout </Button>
             </Flex>
-        )
+        );
 
     return (
         <Flex bg="gray.800" color="white" p={4} alignItems="center">
             <Box>
-                <Text fontSize="lg" fontWeight="bold">
+                <NavBarLink href="/" fontSize="lg" fontWeight="bold">
                     Reddit
-                </Text>
+                </NavBarLink>
             </Box>
             <Box ml="auto">
                 {items}

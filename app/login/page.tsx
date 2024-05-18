@@ -4,9 +4,9 @@ import Wrapper from "../components/Wrapper";
 import InputField from "../components/InputField";
 import { Box, Button } from "@chakra-ui/react";
 import { useMutation } from "urql";
-import { toErrorsMap } from "../utils/toErrorMap";
+import { toErrorsMap } from "../lib/utils/toErrorMap";
 import { useRouter } from "next/navigation";
-import { useLoginMutation } from "../graphql/generated/graphql";
+import { useLoginMutation } from "../lib/graphql/generated/graphql";
 
 interface LoginProps { };
 
@@ -22,8 +22,8 @@ const Login: React.FC<LoginProps> = ({ }) => {
                     if (res.data?.login.errors)
                         setErrors(toErrorsMap(res.data.login.errors));
                     else if (res.data?.login.user) {
-                        console.log(res.data.login.user)
-                        router.push('/');
+                        console.log(res.data.login.user);
+                        router.push("/");
                     }
                 }}
             >

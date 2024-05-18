@@ -13,7 +13,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     const [field, { error }] = useField(props);
     const label = props.label || props.name;
     const placeholder = props.placeholder || props.label;
-    const type = props.type || 'text';
+    const type = props.type || "text";
 
     return (
         <>
