@@ -17,7 +17,7 @@ const NavBarLink: React.FC<LinkProps> = (props) => {
 
 const NavBar: React.FC = () => {
 
-    const { data, loading } = useMeQuery();
+    const { data } = useMeQuery();
     const [logout] = useLogoutMutation();
     let items;
 
@@ -37,7 +37,7 @@ const NavBar: React.FC = () => {
             <Flex mr={4}>
                 <Box mr={3}>{data.me.username}</Box>
                 <Button
-                    onClick={() => logout({ refetchQueries: ["Me"] })}
+                    onClick={() => logout({ refetchQueries: ["Me", "Posts"] })}
                     variant="link"
                     textDecoration="none"
                     _hover={{ textDecoration: "none" }}
