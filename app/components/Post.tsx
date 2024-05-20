@@ -7,7 +7,7 @@ interface PostProps {
 
 const Post: React.FC<PostProps> = ({ title, content }) => {
     return (
-        <Card borderWidth="1px" borderRadius="md" mb={5} mx={10}>
+        <Card variant="elevated" borderRadius="sm" mb={5} mx={10}>
             <CardHeader>
                 <Heading as="h2" size="lg" mb={2}>
                     {title}

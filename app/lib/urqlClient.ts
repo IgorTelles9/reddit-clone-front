@@ -24,4 +24,3 @@ export const withUrql = (PageComponent: any, options = {}) =>
         ...options,
         ssr: true,
     })(PageComponent);
-

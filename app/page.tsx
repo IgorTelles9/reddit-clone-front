@@ -1,24 +1,22 @@
 "use client";
-import { Suspense } from "react";
+import { Box } from "@chakra-ui/react";
 import Post from "./components/Post";
-import { Post as PostType, PostsDocument } from "./lib/graphql/generated/graphql";
-import { useQuery } from "@urql/next";
+import { usePostsQuery } from "./lib/graphql/generated/graphql";
+import { withUrql } from "./lib/urqlClient";
 
 const Page = () => {
-    const [{ data }] = useQuery({ query: PostsDocument });
+    const [{ data }] = usePostsQuery();
     return (
-        <Suspense>
-            <h1>Posts</h1>
+        <Box mt={4}>
             {
                 data
-                    ? (data.posts.map((p: PostType) => (
-                        <Post key={p.id} title={p.title} content={p.content} />
+                    ? (data.posts.map(({ id, title, content }) => (
+                        <Post key={id} title={title} content={content} />
                     )))
                     : null
             }
-        </Suspense>
-
+        </Box>
     );
 };
 
-export default Page;
+export default withUrql(Page);

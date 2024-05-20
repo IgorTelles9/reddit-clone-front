@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Link, LinkProps, Spinner } from "@chakra-ui/react";
 import React from "react";
 import { useLogoutMutation, useMeQuery } from "../lib/graphql/generated/graphql";
+import { withUrql } from "../lib/urqlClient";
 
 const NavBarLink: React.FC<LinkProps> = (props) => {
     return (
@@ -15,7 +16,7 @@ const NavBarLink: React.FC<LinkProps> = (props) => {
 
 };
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<{}> = () => {
     const [{ data, fetching }] = useMeQuery();
     const [, logout] = useLogoutMutation();
     let items;
