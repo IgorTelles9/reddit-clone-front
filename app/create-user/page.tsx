@@ -16,7 +16,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ }) => {
     return (
         <Wrapper variant="small">
             <Formik
-                initialValues={{ username: "", password: "" }}
+                initialValues={{ username: "", email: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
                     const res = await createUser({ variables: { ...values }, refetchQueries: ["Me"] });
                     if (res.data?.createUser.errors)
@@ -28,7 +28,8 @@ const CreateUser: React.FC<CreateUserProps> = ({ }) => {
                 {({ isSubmitting }) => (
                     <Form>
                         <InputField name="username" />
-                        <Box mt={4}> <InputField name="password" type="password" /></Box>
+                        <InputField name="email" />
+                        <InputField name="password" type="password" />
                         <Button
                             mt={4}
                             colorScheme='teal'

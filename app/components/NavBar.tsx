@@ -1,4 +1,5 @@
-import { Box, Button, Flex, Link, LinkProps, Spinner } from "@chakra-ui/react";
+import { Box, Button, Flex, Link, LinkProps } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useLogoutMutation, useMeQuery } from "../lib/graphql/generated/graphql";
 
@@ -19,6 +20,7 @@ const NavBar: React.FC = () => {
 
     const { data } = useMeQuery();
     const [logout] = useLogoutMutation();
+    const router = useRouter();
     let items;
 
     if (!data?.me)
@@ -37,7 +39,12 @@ const NavBar: React.FC = () => {
             <Flex mr={4}>
                 <Box mr={3}>{data.me.username}</Box>
                 <Button
-                    onClick={() => logout({ refetchQueries: ["Me", "Posts"] })}
+                    onClick={() => {
+                        logout({ refetchQueries: ["Me"] });
+                        router.push("/login");
+
+                    }
+                    }
                     variant="link"
                     textDecoration="none"
                     _hover={{ textDecoration: "none" }}

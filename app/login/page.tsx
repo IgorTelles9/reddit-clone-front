@@ -15,7 +15,7 @@ const Login: React.FC<LoginProps> = ({ }) => {
     return (
         <Wrapper variant="small">
             <Formik
-                initialValues={{ username: "", password: "" }}
+                initialValues={{ usernameOrEmail: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
                     const res = await login({ variables: { ...values }, refetchQueries: ["Me"] });
                     if (res.data?.login.errors)
@@ -26,18 +26,20 @@ const Login: React.FC<LoginProps> = ({ }) => {
                 }}
             >
                 {({ isSubmitting }) => (
-                    <Form>
-                        <InputField name="username" />
-                        <Box mt={4}> <InputField name="password" type="password" /></Box>
-                        <Button
-                            mt={4}
-                            colorScheme='teal'
-                            isLoading={isSubmitting}
-                            type='submit'
-                        >
-                            login
-                        </Button>
-                    </Form>
+                    <Box p={4}>
+                        <Form>
+                            <InputField name="usernameOrEmail" label="username or email" placeholder="username/email" />
+                            <InputField name="password" type="password" />
+                            <Button
+                                mt={4}
+                                colorScheme='teal'
+                                isLoading={isSubmitting}
+                                type='submit'
+                            >
+                                login
+                            </Button>
+                        </Form>
+                    </Box>
                 )}
 
             </Formik>
