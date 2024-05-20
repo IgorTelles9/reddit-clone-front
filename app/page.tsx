@@ -1,17 +1,19 @@
-"use client";
 import { Suspense } from "react";
 import Post from "./components/Post";
-import { Post as PostType, PostsDocument, usePostsQuery } from "./lib/graphql/generated/graphql";
+import { getServerApolloClient } from "./lib/client";
+import { PostsDocument } from "./lib/graphql/generated/graphql";
 
-const Page = () => {
-    const [{ data }] = usePostsQuery();
+export const revalidate = 5;
+
+const Page = async () => {
+    const { data } = await getServerApolloClient().query({ query: PostsDocument });
     return (
         <Suspense>
             <h1>Posts</h1>
             {
                 data
-                    ? (data.posts.map(({ id, title, content }) => (
-                        <Post key={id} title={title} content={content} />
+                    ? (data.posts.map((p: any) => (
+                        <Post key={p.id} title={p.title} content={p.content} />
                     )))
                     : null
             }

@@ -10,18 +10,17 @@ import { toErrorsMap } from "../lib/utils/toErrorMap";
 interface LoginProps { };
 
 const Login: React.FC<LoginProps> = ({ }) => {
-    const [, login] = useLoginMutation();
+    const [login] = useLoginMutation();
     const router = useRouter();
     return (
         <Wrapper variant="small">
             <Formik
                 initialValues={{ username: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
-                    const res = await login(values as any);
+                    const res = await login({ variables: { ...values }, refetchQueries: ["Me"] });
                     if (res.data?.login.errors)
                         setErrors(toErrorsMap(res.data.login.errors));
                     else if (res.data?.login.user) {
-                        console.log(res.data.login.user);
                         router.push("/");
                     }
                 }}
