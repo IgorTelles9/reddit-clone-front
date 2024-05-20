@@ -16,12 +16,12 @@ const NavBarLink: React.FC<LinkProps> = (props) => {
 };
 
 const NavBar: React.FC = () => {
-    const [{ data, fetching }] = useMeQuery();
-    const [, logout] = useLogoutMutation();
+
+    const { data, loading } = useMeQuery();
+    const [logout] = useLogoutMutation();
     let items;
-    if (fetching)
-        items = <Spinner />;
-    else if (!data?.me)
+
+    if (!data?.me)
         items = (
             <>
                 <NavBarLink href="/login">
@@ -37,7 +37,7 @@ const NavBar: React.FC = () => {
             <Flex mr={4}>
                 <Box mr={3}>{data.me.username}</Box>
                 <Button
-                    onClick={() => logout({})}
+                    onClick={() => logout({ refetchQueries: ["Me"] })}
                     variant="link"
                     textDecoration="none"
                     _hover={{ textDecoration: "none" }}

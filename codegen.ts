@@ -1,22 +1,23 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
-    schema: "http://localhost:4000/graphql", // Adjust this to your GraphQL endpoint
-    documents: "app/lib/graphql/**/*.graphql", // Path to your GraphQL queries and mutations
+    schema: "http://localhost:4000/graphql", // replace with your GraphQL endpoint
+    documents: "app/lib/graphql/**/*.graphql",
     generates: {
         "app/lib/graphql/generated/graphql.tsx": {
             plugins: [
                 "typescript",
                 "typescript-operations",
-                "typescript-urql"
+                "typescript-react-apollo"
             ],
             config: {
+                withHooks: true,
                 withHOC: false,
                 withComponent: false,
-                withHooks: true
-            }
-        }
-    }
+            },
+        },
+    },
 };
 
 export default config;
+

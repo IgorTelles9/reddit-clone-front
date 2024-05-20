@@ -11,14 +11,14 @@ import { toErrorsMap } from "../lib/utils/toErrorMap";
 interface CreateUserProps { };
 
 const CreateUser: React.FC<CreateUserProps> = ({ }) => {
-    const [, createUser] = useCreateUserMutation();
+    const [createUser] = useCreateUserMutation();
     const router = useRouter();
     return (
         <Wrapper variant="small">
             <Formik
                 initialValues={{ username: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
-                    const res = await createUser(values as any);
+                    const res = await createUser({ variables: { ...values }, refetchQueries: ["Me"] });
                     if (res.data?.createUser.errors)
                         setErrors(toErrorsMap(res.data.createUser.errors));
                     else if (res.data?.createUser.user)

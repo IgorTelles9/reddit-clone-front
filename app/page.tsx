@@ -4,7 +4,7 @@ import Post from "./components/Post";
 import { Post as PostType, PostsDocument, usePostsQuery } from "./lib/graphql/generated/graphql";
 
 const Page = () => {
-    const [{ data }] = usePostsQuery();
+    const { data } = usePostsQuery();
     return (
         <Suspense>
             <h1>Posts</h1>

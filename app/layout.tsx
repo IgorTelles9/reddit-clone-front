@@ -1,11 +1,17 @@
 "use client";
 import { ChakraProvider } from "@chakra-ui/react";
 import Head from "next/head";
-import { Provider } from "urql";
 import NavBar from "./components/NavBar";
 import { inter } from "./fonts";
 import "./globals.css";
-import { createUrqlClient } from "./lib/urqlClient";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+    uri: "http://localhost:4000/graphql",
+    cache: new InMemoryCache(),
+    credentials: "include",
+
+});
 
 export default function RootLayout({
     children,
@@ -13,7 +19,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <Provider value={createUrqlClient()}>
+        <ApolloProvider client={client}>
             <html lang="en">
                 <Head>
                     <title>Reddit Clone</title>
@@ -27,7 +33,7 @@ export default function RootLayout({
                     </ChakraProvider>
                 </body>
             </html>
-        </Provider>
+        </ApolloProvider>
 
     );
 }
