@@ -1,7 +1,7 @@
 "use client";
 import { Suspense } from "react";
 import Post from "./components/Post";
-import { Post as PostType, PostsDocument, usePostsQuery } from "./lib/graphql/generated/graphql";
+import { usePostsQuery } from "./lib/graphql/generated/graphql";
 
 const Page = () => {
     const [{ data }] = usePostsQuery();
