@@ -1,12 +1,6 @@
 mutation CreateUser($password: String!, $username: String!, $email: String!) {
     createUser(password: $password, username: $username, email: $email) {
-      user {
-        ...RegularUser
-      }
-      errors {
-        field
-        message
-      }
+      ...RegularUserResponse
     }
 }
   

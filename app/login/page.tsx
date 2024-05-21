@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Flex, Link } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/navigation";
 import InputField from "../components/InputField";
@@ -7,9 +7,9 @@ import Wrapper from "../components/Wrapper";
 import { useLoginMutation } from "../lib/graphql/generated/graphql";
 import { toErrorsMap } from "../lib/utils/toErrorMap";
 
-interface LoginProps { };
+interface LoginProps {}
 
-const Login: React.FC<LoginProps> = ({ }) => {
+const Login: React.FC<LoginProps> = ({}) => {
     const [login] = useLoginMutation();
     const router = useRouter();
     return (
@@ -18,8 +18,7 @@ const Login: React.FC<LoginProps> = ({ }) => {
                 initialValues={{ usernameOrEmail: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
                     const res = await login({ variables: { ...values }, refetchQueries: ["Me"] });
-                    if (res.data?.login.errors)
-                        setErrors(toErrorsMap(res.data.login.errors));
+                    if (res.data?.login.errors) setErrors(toErrorsMap(res.data.login.errors));
                     else if (res.data?.login.user) {
                         router.push("/");
                     }
@@ -28,20 +27,28 @@ const Login: React.FC<LoginProps> = ({ }) => {
                 {({ isSubmitting }) => (
                     <Box p={4}>
                         <Form>
-                            <InputField name="usernameOrEmail" label="username or email" placeholder="username/email" />
+                            <InputField
+                                name="usernameOrEmail"
+                                label="username or email"
+                                placeholder="username/email"
+                            />
                             <InputField name="password" type="password" />
-                            <Button
-                                mt={4}
-                                colorScheme='teal'
-                                isLoading={isSubmitting}
-                                type='submit'
-                            >
-                                login
-                            </Button>
+                            <Flex justifyContent="end" alignItems="baseline">
+                                <Button
+                                    mt={4}
+                                    colorScheme="teal"
+                                    isLoading={isSubmitting}
+                                    type="submit"
+                                >
+                                    login
+                                </Button>
+                                <Link href="/forgot-password" mt="auto" ml="auto">
+                                    forgot password?
+                                </Link>
+                            </Flex>
                         </Form>
                     </Box>
                 )}
-
             </Formik>
         </Wrapper>
     );

@@ -7,10 +7,9 @@ import Wrapper from "../components/Wrapper";
 import { useCreateUserMutation } from "../lib/graphql/generated/graphql";
 import { toErrorsMap } from "../lib/utils/toErrorMap";
 
+interface CreateUserProps {}
 
-interface CreateUserProps { };
-
-const CreateUser: React.FC<CreateUserProps> = ({ }) => {
+const CreateUser: React.FC<CreateUserProps> = ({}) => {
     const [createUser] = useCreateUserMutation();
     const router = useRouter();
     return (
@@ -18,11 +17,13 @@ const CreateUser: React.FC<CreateUserProps> = ({ }) => {
             <Formik
                 initialValues={{ username: "", email: "", password: "" }}
                 onSubmit={async (values, { setErrors }) => {
-                    const res = await createUser({ variables: { ...values }, refetchQueries: ["Me"] });
+                    const res = await createUser({
+                        variables: { ...values },
+                        refetchQueries: ["Me"],
+                    });
                     if (res.data?.createUser.errors)
                         setErrors(toErrorsMap(res.data.createUser.errors));
-                    else if (res.data?.createUser.user)
-                        router.push("/");
+                    else if (res.data?.createUser.user) router.push("/");
                 }}
             >
                 {({ isSubmitting }) => (
@@ -32,15 +33,14 @@ const CreateUser: React.FC<CreateUserProps> = ({ }) => {
                         <InputField name="password" type="password" />
                         <Button
                             mt={4}
-                            colorScheme='teal'
+                            colorScheme="teal"
                             isLoading={isSubmitting}
-                            type='submit'
+                            type="submit"
                         >
                             create user
                         </Button>
                     </Form>
                 )}
-
             </Formik>
         </Wrapper>
     );
