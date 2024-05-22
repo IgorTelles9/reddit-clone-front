@@ -1,7 +1,7 @@
-import { Box, Button, Flex, Link, LinkProps } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
+import { Box, Flex, Link, LinkProps } from "@chakra-ui/react";
 import React from "react";
-import { useLogoutMutation, useMeQuery } from "../lib/graphql/generated/graphql";
+import { useMeQuery } from "../lib/graphql/generated/graphql";
+import ProfileMenu from "./ProfileMenu";
 
 const NavBarLink: React.FC<LinkProps> = (props) => {
     return (
@@ -13,55 +13,35 @@ const NavBarLink: React.FC<LinkProps> = (props) => {
             {...props}
         />
     );
-
 };
 
 const NavBar: React.FC = () => {
-
-    const { data } = useMeQuery();
-    const [logout] = useLogoutMutation();
-    const router = useRouter();
+    const { data, loading } = useMeQuery();
     let items;
 
-    if (!data?.me)
+    if (loading) items = null;
+    else if (!data?.me)
         items = (
             <>
-                <NavBarLink href="/login">
-                    sign in
-                </NavBarLink>
-                <NavBarLink href="/create-user">
-                    sign up
-                </NavBarLink>
+                <NavBarLink href="/login">sign in</NavBarLink>
+                <NavBarLink href="/create-user">sign up</NavBarLink>
             </>
         );
     else
         items = (
-            <Flex mr={4}>
-                <Box mr={3}>{data.me.username}</Box>
-                <Button
-                    onClick={() => {
-                        logout({ refetchQueries: ["Me"] });
-                        router.push("/login");
-
-                    }
-                    }
-                    variant="link"
-                    textDecoration="none"
-                    _hover={{ textDecoration: "none" }}
-                > logout </Button>
+            <Flex justifyContent="center" mr={4}>
+                <ProfileMenu username={data.me.username} email={data.me.email} />
             </Flex>
         );
 
     return (
-        <Flex bg="gray.800" color="white" p={4} alignItems="center">
+        <Flex bg="#3f207d" color="white" p={4} alignItems="center">
             <Box>
                 <NavBarLink href="/" fontSize="lg" fontWeight="bold">
                     Reddit
                 </NavBarLink>
             </Box>
-            <Box ml="auto">
-                {items}
-            </Box>
+            <Box ml="auto">{items}</Box>
         </Flex>
     );
 };

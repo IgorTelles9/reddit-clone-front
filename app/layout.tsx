@@ -1,5 +1,5 @@
 "use client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import Head from "next/head";
 import NavBar from "./components/NavBar";
 import { inter } from "./fonts";
@@ -11,7 +11,6 @@ const client = new ApolloClient({
     uri: "http://localhost:4000/graphql",
     cache: new InMemoryCache(),
     credentials: "include",
-
 });
 
 export default function RootLayout({
@@ -29,12 +28,12 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ApolloProvider client={client}>
                     <ChakraProvider>
+                        <CSSReset />
                         <NavBar />
                         {children}
                     </ChakraProvider>
                 </ApolloProvider>
             </body>
         </html>
-
     );
 }
